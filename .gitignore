@@ -5,6 +5,7 @@ venv/
 .cache
 .swp
 .swo
+.env
 build
 dist
 src/oncall/ui/static/.webassets-cache/
