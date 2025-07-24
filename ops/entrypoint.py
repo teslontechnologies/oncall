@@ -31,7 +31,9 @@ def load_sqldump(config, sqlfile, one_db=True):
                    'oncall will likely not function correctly. '
                    'mysql exit code: %s for %s') % (proc.returncode, sqlfile))
             return False
-
+        
+def open_send_email_file():
+    subprocess.Popen(['python', '/home/oncall/source/src/oncall/send_email.py'])
 
 def wait_for_mysql(config):
     print('Checking MySQL liveness on %s...' % config['host'])
@@ -82,6 +84,9 @@ def main():
     # It often takes several seconds for MySQL to start up. oncall dies upon start
     # if it can't immediately connect to MySQL, so we have to wait for it.
     wait_for_mysql(mysql_config)
+
+    # Open send_email file.
+    open_send_email_file()
 
     if 'DOCKER_DB_BOOTSTRAP' in os.environ:
         if not os.path.exists(initializedfile):
